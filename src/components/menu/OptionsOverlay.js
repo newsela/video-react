@@ -180,6 +180,7 @@ class OptionsOverlay extends Component {
                     onSelectItem={this.handleSelectItem}
                     activateIndex={selectedIndex}
                     key={item.label}
+                    isCaptionOption
                   />
                 ))}
               </Menu>

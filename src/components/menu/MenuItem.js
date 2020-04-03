@@ -6,7 +6,8 @@ const propTypes = {
   label: PropTypes.string,
   index: PropTypes.number,
   activateIndex: PropTypes.number,
-  onSelectItem: PropTypes.func
+  onSelectItem: PropTypes.func,
+  isCaptionOption: PropTypes.bool
 };
 
 export default class MenuItem extends Component {
@@ -23,6 +24,8 @@ export default class MenuItem extends Component {
 
   render() {
     const { label, index, activateIndex } = this.props;
+    const closedCaptionText =
+      this.props.isCaptionOption && index !== 0 ? '[CC]' : '';
     return (
       <div
         className={classNames('video-react-menu-item')}
@@ -36,7 +39,9 @@ export default class MenuItem extends Component {
             'video-react-menu-item-radio-selected': index === activateIndex
           })}
         />
-        <p>{label}</p>
+        <p>
+          {label} {closedCaptionText}
+        </p>
       </div>
     );
   }
