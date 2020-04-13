@@ -90,9 +90,9 @@
     left: 50%;
     transform: translate(-50%, -100%);
     height: auto;
-    width: inherit;
     background-color: inherit;
     border-radius: 4px 4px 0 0;
+    width: 100%;
   }
   .video-react-menu-button-popup.video-react-volume-menu-button-horizontal + .video-react-menu {
     left: -2em;
@@ -110,7 +110,8 @@
   .video-react-volume-menu-button-vertical:hover + .video-react-menu > .video-react-menu-content,
   .video-react-volume-menu-button-vertical:focus + .video-react-menu > .video-react-menu-content,
   .video-react-volume-menu-button-vertical.video-react-slider-active + .video-react-menu > .video-react-menu-content,
-  .video-react-volume-menu-button-vertical .video-react-lock-showing + .video-react-menu > .video-react-menu-content{
+  .video-react-volume-menu-button-vertical .video-react-lock-showing + .video-react-menu > .video-react-menu-content,
+  .video-react-menu:hover, .video-react-menu:focus {
     height: auto;
     width: inherit;
     background-color: transparent;
