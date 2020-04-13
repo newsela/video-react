@@ -23,10 +23,8 @@ export default function PopupButton(props) {
   delete ps.inline;
   delete ps.className;
 
-  console.log(props);
-
   return (
-    <>
+    <div className="video-react-popup-button-container">
       <ClickableComponent
         className={classNames(
           className,
@@ -39,7 +37,7 @@ export default function PopupButton(props) {
         {...ps}
       />
       <Popup {...props} />
-    </>
+    </div>
   );
 }
 
