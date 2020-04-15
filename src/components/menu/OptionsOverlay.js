@@ -29,6 +29,8 @@ class OptionsOverlay extends Component {
     );
     this.updateState = this.updateState.bind(this);
     this.handleSelectItem = this.handleSelectItem.bind(this);
+    this.handleRefChange = this.handleRefChange.bind(this);
+    this.handleKeyUp = this.handleKeyUp.bind(this);
 
     this.state = this.getTextTrackItems();
   }
@@ -78,6 +80,43 @@ class OptionsOverlay extends Component {
     }
 
     return textTrackItems;
+  }
+
+  close() {
+    if (this.props.player.isOptionsOverlayOpen) {
+      this.props.actions.handleOptionsOverlayChange();
+    }
+  }
+
+  listenClose(optionsOverlayElem) {
+    // Close the panel upon focus or click elsewhere on the DOM.
+    const handleActivityElsewhere = event => {
+      if (optionsOverlayElem.contains(event.target)) return;
+      this.close();
+    };
+    document.addEventListener('focusin', handleActivityElsewhere);
+    document.addEventListener('click', handleActivityElsewhere);
+    const stopListening = () => {
+      document.removeEventListener('focusin', handleActivityElsewhere);
+      document.removeEventListener('click', handleActivityElsewhere);
+    };
+    return stopListening;
+  }
+
+  handleKeyUp(event) {
+    if (event.key === 'Escape') {
+      this.close();
+    }
+  }
+
+  handleRefChange(optionsOverlayElem) {
+    if (this.stopListeningForClose) {
+      this.stopListeningForClose();
+    }
+    if (optionsOverlayElem) {
+      optionsOverlayElem.focus();
+      this.stopListeningForClose = this.listenClose(optionsOverlayElem);
+    }
   }
 
   updateState() {
@@ -139,52 +178,56 @@ class OptionsOverlay extends Component {
     if (!player.isOptionsOverlayOpen) return null;
 
     return (
-      <div className={classNames(className)}>
+      <div
+        className={classNames('video-react-options-overlay', className)}
+        ref={this.handleRefChange}
+        onKeyUp={this.handleKeyUp}
+        tabIndex="-1"
+      >
         <button
+          type="button"
           className={classNames('video-react-options-close')}
           onClick={() => actions.handleOptionsOverlayChange()}
           aria-label="Close Options Menu"
         >
           &times;
         </button>
-        <div className={classNames('video-react-options-overlay')}>
-          <div className={classNames('video-react-options-menu-section')}>
-            <h3 className={classNames('video-react-menu-section-header')}>
-              Closed Captions
-            </h3>
-            {items && (
-              <Menu>
-                {items.map((item, i) => (
-                  <MenuItem
-                    label={item.label}
-                    index={i}
-                    onSelectItem={this.handleSelectItem}
-                    activateIndex={selectedIndex}
-                    key={item.label}
-                  />
-                ))}
-              </Menu>
-            )}
-          </div>
+        <div className={classNames('video-react-options-menu-section')}>
+          <h3 className={classNames('video-react-menu-section-header')}>
+            Closed Captions
+          </h3>
+          {items && (
+            <Menu>
+              {items.map((item, i) => (
+                <MenuItem
+                  label={item.label}
+                  index={i}
+                  onSelectItem={this.handleSelectItem}
+                  activateIndex={selectedIndex}
+                  key={item.label}
+                />
+              ))}
+            </Menu>
+          )}
+        </div>
 
-          <div className={classNames('video-react-options-menu-section')}>
-            <h3 className={classNames('video-react-menu-section-header')}>
-              Audio Description
-            </h3>
-            {player.audioDescriptions && (
-              <Menu>
-                {player.audioDescriptions.map((description, i) => (
-                  <MenuItem
-                    label={description.label}
-                    index={i}
-                    onSelectItem={this.handleSelectAudioDescription}
-                    activateIndex={player.activeAudioDescription}
-                    key={description.label}
-                  />
-                ))}
-              </Menu>
-            )}
-          </div>
+        <div className={classNames('video-react-options-menu-section')}>
+          <h3 className={classNames('video-react-menu-section-header')}>
+            Audio Description
+          </h3>
+          {player.audioDescriptions && (
+            <Menu>
+              {player.audioDescriptions.map((description, i) => (
+                <MenuItem
+                  label={description.label}
+                  index={i}
+                  onSelectItem={this.handleSelectAudioDescription}
+                  activateIndex={player.activeAudioDescription}
+                  key={description.label}
+                />
+              ))}
+            </Menu>
+          )}
         </div>
       </div>
     );
