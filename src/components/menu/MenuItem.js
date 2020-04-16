@@ -14,11 +14,23 @@ export default class MenuItem extends Component {
     super(props, context);
 
     this.handleClick = this.handleClick.bind(this);
+    this.handleKeyDown = this.handleKeyDown.bind(this);
+  }
+
+  select() {
+    const { index, onSelectItem } = this.props;
+    onSelectItem(index);
   }
 
   handleClick() {
-    const { index, onSelectItem } = this.props;
-    onSelectItem(index);
+    this.select();
+  }
+
+  handleKeyDown(event) {
+    if (event.key === ' ' || event.key === 'Enter') {
+      event.preventDefault();
+      this.select();
+    }
   }
 
   render() {
@@ -29,6 +41,7 @@ export default class MenuItem extends Component {
         role="menuitem"
         onClick={this.handleClick}
         tabIndex="0"
+        onKeyDown={this.handleKeyDown}
       >
         <div
           className={classNames({
