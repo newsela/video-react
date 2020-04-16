@@ -1,3 +1,8 @@
+$menu-item-height: 1.4em;
+$menu-item-radio-dimensions: 1em;
+$menu-item-left-padding: ($menu-item-height - $menu-item-radio-dimensions) / 2;
+$radio-inner-padding: 2px;
+
 .video-react-options-close {
   position: absolute;
   top: 0.4em;
@@ -39,24 +44,40 @@
     .video-react-menu-item {
       display: flex;
       align-items: center;
+      font-size: 16px;
+      padding-left: $menu-item-left-padding;
+      transform: translateX(-$menu-item-left-padding);
+      height: $menu-item-height;
+      border-radius: 1em;
+      margin: 0.5em 0;
       cursor: pointer;
 
+      &:not(.video-react-menu-item-selected):hover {
+        background-color: #545454;
+      }
+
       .video-react-menu-item-radio {
-        width: 1em;
-        height: 1em;
-        border-radius: 0.5em;
+        width: $menu-item-radio-dimensions;
+        height: $menu-item-radio-dimensions;
         border: 1px solid white;
+        border-radius: 50%;
         display: block;
         margin-right: 0.5em;
+        position: relative;
 
-        &.video-react-menu-item-radio-selected, &:hover {
-          background-color: blue;
+        &.video-react-menu-item-radio-selected::after {
+          content: '';
+          position: absolute;
+          border-radius: 50%;
+          top: $radio-inner-padding;
+          left: $radio-inner-padding;
+          width: calc(#{$menu-item-radio-dimensions} - 2px - #{$radio-inner-padding} * 2);
+          height: calc(#{$menu-item-radio-dimensions} - 2px - #{$radio-inner-padding} * 2);
+          background-color: #2C83FB;
         }
       }
 
       p {
-        font-size: 1.3em;
-        margin: 0.25em 0;
         font-weight: bold;
       }
     }

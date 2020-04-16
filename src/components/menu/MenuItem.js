@@ -37,7 +37,10 @@ export default class MenuItem extends Component {
     const { label, index, activateIndex } = this.props;
     return (
       <div
-        className={classNames('video-react-menu-item')}
+        className={classNames({
+          'video-react-menu-item': true,
+          'video-react-menu-item-selected': index === activateIndex
+        })}
         role="menuitem"
         onClick={this.handleClick}
         tabIndex="0"
