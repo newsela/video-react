@@ -31,6 +31,7 @@ class OptionsOverlay extends Component {
     this.handleSelectItem = this.handleSelectItem.bind(this);
     this.handleRefChange = this.handleRefChange.bind(this);
     this.handleKeyUp = this.handleKeyUp.bind(this);
+    this.handleKeyDown = this.handleKeyDown.bind(this);
 
     this.state = this.getTextTrackItems();
   }
@@ -109,6 +110,10 @@ class OptionsOverlay extends Component {
     }
   }
 
+  handleKeyDown(event) {
+    event.stopPropagation();
+  }
+
   handleRefChange(optionsOverlayElem) {
     if (this.stopListeningForClose) {
       this.stopListeningForClose();
@@ -182,6 +187,7 @@ class OptionsOverlay extends Component {
         className={classNames('video-react-options-overlay', className)}
         ref={this.handleRefChange}
         onKeyUp={this.handleKeyUp}
+        onKeyDown={this.handleKeyDown}
         tabIndex="-1"
       >
         <button
