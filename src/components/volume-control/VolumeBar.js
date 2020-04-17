@@ -32,8 +32,6 @@ class VolumeBar extends Component {
     this.handleClick = this.handleClick.bind(this);
   }
 
-  componentDidMount() {}
-
   getPercent() {
     const { player } = this.props;
     if (player.muted) {

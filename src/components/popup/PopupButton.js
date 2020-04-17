@@ -17,17 +17,19 @@ const defaultProps = {
 };
 
 export default function PopupButton(props) {
-  const { inline, className } = props;
+  const { inline, className, buttonClassName } = props;
   const ps = { ...props };
   delete ps.children;
   delete ps.inline;
   delete ps.className;
 
   return (
-    <div className="video-react-popup-button-container">
+    <div
+      className={classNames(className, 'video-react-popup-button-container')}
+    >
       <ClickableComponent
         className={classNames(
-          className,
+          buttonClassName,
           {
             'video-react-menu-button-inline': !!inline,
             'video-react-menu-button-popup': !inline
