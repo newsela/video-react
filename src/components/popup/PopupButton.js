@@ -17,25 +17,29 @@ const defaultProps = {
 };
 
 export default function PopupButton(props) {
-  const { inline, className } = props;
+  const { inline, className, buttonClassName } = props;
   const ps = { ...props };
   delete ps.children;
   delete ps.inline;
   delete ps.className;
+
   return (
-    <ClickableComponent
-      className={classNames(
-        className,
-        {
-          'video-react-menu-button-inline': !!inline,
-          'video-react-menu-button-popup': !inline
-        },
-        'video-react-control video-react-button video-react-menu-button'
-      )}
-      {...ps}
+    <div
+      className={classNames(className, 'video-react-popup-button-container')}
     >
+      <ClickableComponent
+        className={classNames(
+          buttonClassName,
+          {
+            'video-react-menu-button-inline': !!inline,
+            'video-react-menu-button-popup': !inline
+          },
+          'video-react-control video-react-button video-react-menu-button'
+        )}
+        {...ps}
+      />
       <Popup {...props} />
-    </ClickableComponent>
+    </div>
   );
 }
 

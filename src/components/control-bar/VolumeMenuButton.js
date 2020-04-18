@@ -83,7 +83,7 @@ class VolumeMenuButton extends Component {
   }
 
   render() {
-    const { vertical, player, className } = this.props;
+    const { vertical, player, className, buttonClassName } = this.props;
     const inline = !vertical;
     const level = this.volumeLevel;
 
@@ -94,22 +94,29 @@ class VolumeMenuButton extends Component {
         className={classNames(
           className,
           {
-            'video-react-volume-menu-button-vertical': vertical,
-            'video-react-volume-menu-button-horizontal': !vertical,
-            'video-react-vol-muted': player.muted,
-            'video-react-vol-0': level === 0 && !player.muted,
-            'video-react-vol-1': level === 1,
-            'video-react-vol-2': level === 2,
-            'video-react-vol-3': level === 3,
+            'video-react-volume-menu-vertical': vertical,
+            'video-react-volume-menu-horizontal': !vertical,
             'video-react-slider-active':
               this.props.alwaysShowVolume || this.state.active,
             'video-react-lock-showing':
               this.props.alwaysShowVolume || this.state.active
           },
-          'video-react-volume-menu-button'
+          'video-react-volume-menu'
         )}
         onClick={this.handleClick}
+        buttonClassName={classNames(
+          buttonClassName,
+          {
+            'video-react-vol-muted': player.muted,
+            'video-react-vol-0': level === 0 && !player.muted,
+            'video-react-vol-1': level === 1,
+            'video-react-vol-2': level === 2,
+            'video-react-vol-3': level === 3
+          },
+          'video-react-volume-menu-button'
+        )}
         inline={inline}
+        aria-label="Volume"
       >
         {children}
       </PopupButton>
