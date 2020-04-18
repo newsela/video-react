@@ -1,16 +1,34 @@
+$menu-item-height: 1.5em;
+$menu-item-radio-dimensions: 1em;
+$menu-item-left-padding: ($menu-item-height - $menu-item-radio-dimensions) / 2;
+$radio-inner-padding: 2px;
+$hover-bg-color: rgba(84, 84, 84, 0.7);
+
 .video-react-options-close {
   position: absolute;
-  top: 0.4em;
-  right: 0.5em;
+  top: 0.25em;
+  right: 0.25em;
   color: white;
   background: none;
   border: none;
   font-size: 2.5em;
   z-index: 2;
+  height: 1em;
+  width: 1em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  > span {
+    line-height: 1em;
+    font-size: 0.7em;
+    font-weight: bold;
+  }
 
   &:hover {
     cursor: pointer;
-    opacity: 0.8;
+    background-color: $hover-bg-color;
+    border-radius: 50%;
   }
 }
 
@@ -19,7 +37,7 @@
   top: 0;
   right: 0;
   height: 100%;
-  width: 325px;
+  min-width: 225px;
   background: rgba(#000000, 0.8);
   z-index: 1;
   display: flex;
@@ -29,9 +47,9 @@
   .video-react-options-menu-section {
     width: 80%;
     align-self: center;
-    color: #ffffff;
-
+    
     .video-react-menu-section-header {
+      color: #ffffff;
       font-weight: normal;
       margin: 0.25em 0;
     }
@@ -39,24 +57,40 @@
     .video-react-menu-item {
       display: flex;
       align-items: center;
+      font-size: 16px;
+      padding-left: $menu-item-left-padding;
+      transform: translateX(-$menu-item-left-padding);
+      height: $menu-item-height;
+      border-radius: 1em;
+      margin: 0.5em 0;
       cursor: pointer;
 
+      &:not(.video-react-menu-item-selected):hover {
+        background-color: $hover-bg-color;
+      }
+
       .video-react-menu-item-radio {
-        width: 1em;
-        height: 1em;
-        border-radius: 0.5em;
+        width: $menu-item-radio-dimensions;
+        height: $menu-item-radio-dimensions;
         border: 1px solid white;
+        border-radius: 50%;
         display: block;
         margin-right: 0.5em;
+        position: relative;
 
-        &.video-react-menu-item-radio-selected, &:hover {
-          background-color: blue;
+        &.video-react-menu-item-radio-selected::after {
+          content: '';
+          position: absolute;
+          border-radius: 50%;
+          top: $radio-inner-padding;
+          left: $radio-inner-padding;
+          width: calc(#{$menu-item-radio-dimensions} - 2px - #{$radio-inner-padding} * 2);
+          height: calc(#{$menu-item-radio-dimensions} - 2px - #{$radio-inner-padding} * 2);
+          background-color: #2C83FB;
         }
       }
 
       p {
-        font-size: 1.3em;
-        margin: 0.25em 0;
         font-weight: bold;
       }
     }

@@ -74,7 +74,7 @@ export default class ControlBar extends Component {
     const defaultChildren = this.props.disableDefaultControls
       ? []
       : this.getDefaultChildren();
-    const { className, ...parentProps } = this.props; // remove className
+    const parentProps = { player: this.props.player };
     return mergeAndSortChildren(defaultChildren, children, parentProps);
   }
 
